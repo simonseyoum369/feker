@@ -1,49 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="am">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Love Galaxy — Happy Birthday</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>የፍቅራችን ጋላክሲ - መልካም ልደት</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Noto Sans Ethiopic', 'Inter', sans-serif;
             background-color: #050002;
         }
-        .font-serif-lux {
-            font-family: 'Playfair Display', serif;
-        }
-        .font-script {
-            font-family: 'Pinyon Script', cursive;
-        }
+        .font-serif-lux { font-family: 'Playfair Display', 'Noto Sans Ethiopic', serif; }
+        .font-script { font-family: 'Pinyon Script', cursive; }
+        .font-amharic { font-family: 'Noto Sans Ethiopic', sans-serif; }
         
-        /* Custom Keyframe Animations for Cosmic Effects */
-        @keyframes orbit {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes pulse-slow {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 25px rgba(244,63,94,0.6)); }
-        }
-        @keyframes reverse-orbit {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
+        @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse-slow { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 25px rgba(244,63,94,0.6)); } }
+        @keyframes reverse-orbit { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes float-up { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100px) scale(0.5); opacity: 0; } }
 
-        .animate-galaxy-spin {
-            animation: orbit 45s linear infinite;
+        .animate-galaxy-spin { animation: orbit 45s linear infinite; }
+        .animate-heart-pulse { animation: pulse-slow 4s ease-in-out infinite; }
+        .counter-rotate { animation: reverse-orbit 45s linear infinite; }
+        .animate-spin-slow { animation: spin-slow 12s linear infinite; }
+        .animate-float-up { animation: float-up 2s ease-out forwards; }
+        
+        /* Gallery scrollbar hide */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .carousel-btn {
+            transition: all 0.3s;
         }
-        .animate-heart-pulse {
-            animation: pulse-slow 4s ease-in-out infinite;
-        }
-        .counter-rotate {
-            animation: reverse-orbit 45s linear infinite;
+        .carousel-btn:hover {
+            background: rgba(255,255,255,0.15);
         }
     </style>
 </head>
@@ -53,8 +46,9 @@
          class="relative w-full max-w-md h-[840px] rounded-[40px] shadow-2xl overflow-hidden border border-rose-950/40 bg-black text-neutral-100"
          style="box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.9), inset 0 1px 0 1px rgba(255,255,255,0.05);">
         
-        <audio x-ref="bgMusic" loop src="birthday-bgm.mp3"></audio>
+        <audio x-ref="bgMusic" loop preload="auto" src="birthday-bgm.mp3"></audio>
 
+        <!-- Envelope Page -->
         <div x-show="currentPage === 'envelope'" 
              x-transition:leave="transition ease-in duration-700 transform"
              x-transition:leave-start="opacity-100 scale-100"
@@ -62,8 +56,8 @@
              class="absolute inset-0 flex flex-col items-center justify-between p-8 bg-gradient-to-b from-[#240307] via-[#0d0103] to-black z-50">
             
             <div class="text-center mt-12 space-y-2">
-                <span class="text-xs tracking-[0.3em] text-rose-400/70 font-medium uppercase">Incoming Message</span>
-                <h1 class="text-3xl font-serif-lux font-semibold text-neutral-100 tracking-wide">Una Galaxia de Amor</h1>
+                <span class="text-xs tracking-[0.3em] text-rose-400/70 font-medium uppercase font-amharic">መልእክት ደርሷል</span>
+                <h1 class="text-3xl font-serif-lux font-semibold text-neutral-100 tracking-wide font-amharic">የፍቅር ጋላክሲ</h1>
             </div>
 
             <div class="relative w-full aspect-[4/3] flex items-center justify-center group cursor-pointer my-auto"
@@ -82,18 +76,18 @@
                 </div>
             </div>
 
-            <p class="text-[11px] text-neutral-500 tracking-widest uppercase mb-6 animate-pulse">Click the heart to enter your universe</p>
+            <p class="text-[11px] text-neutral-500 tracking-widest uppercase mb-6 animate-pulse font-amharic">ልቡን በመጫን ወደ አለምህ ግባ</p>
         </div>
 
-
+        <!-- Main Content Area -->
         <div x-show="currentPage !== 'envelope'" 
              x-transition:enter="transition ease-out duration-700 delay-300"
              class="absolute inset-0 flex flex-col justify-between overflow-hidden">
             
             <header class="p-6 flex items-center justify-between border-b border-white/5 bg-gradient-to-b from-black via-black/80 to-transparent z-30">
                 <div>
-                    <h2 class="font-serif-lux text-base text-rose-100 tracking-wide" x-text="getHubTitle()"></h2>
-                    <p class="text-[9px] text-rose-400/60 uppercase tracking-widest mt-0.5" x-text="currentPage === 'galaxy' ? 'Explore by tapping items' : 'Your special birthday hub'"></p>
+                    <h2 class="font-serif-lux text-base text-rose-100 tracking-wide font-amharic" x-text="getHubTitle()"></h2>
+                    <p class="text-[9px] text-rose-400/60 uppercase tracking-widest mt-0.5 font-amharic" x-text="getSubtitle()"></p>
                 </div>
                 <button @click="toggleAudio()" class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition">
                     <template x-if="audioPlaying">
@@ -107,23 +101,26 @@
 
             <main class="flex-1 relative flex flex-col justify-center items-center">
                 
+                <!-- Hub Page -->
                 <div x-show="currentPage === 'hub'" x-transition class="w-full text-center px-6 space-y-6">
                     <div class="relative w-32 h-32 mx-auto rounded-full p-1 bg-gradient-to-tr from-rose-500 via-purple-600 to-amber-500 shadow-xl">
-                        <img src="hub-avatar.jpg" alt="Us Picture" class="w-full h-full object-cover rounded-full border-2 border-black" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400'">
+                        <img src="hub-avatar.jpg" alt="እኛ" class="w-full h-full object-cover rounded-full border-2 border-black" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400'">
                     </div>
                     <div class="space-y-2">
-                        <h3 class="text-2xl font-serif-lux text-neutral-100">Happy Birthday, Mi Amor!</h3>
-                        <p class="text-xs text-neutral-400 max-w-xs mx-auto leading-relaxed">I created a small corner of the cosmos dedicated entirely to you. Head over to the <strong>Cosmos tab</strong> below to explore our custom love galaxy!</p>
+                        <h3 class="text-2xl font-serif-lux text-neutral-100 font-amharic">መልካም ልደት ፍቅሬ!</h3>
+                        <p class="text-xs text-neutral-400 max-w-xs mx-auto leading-relaxed font-amharic">ለአንቺ ብቻ የሆነች ትንሽ የኮስሞስ ማዕዘን ፈጥሬያለሁ። ከታች ያሉትን ትሮች በመጫን ተመልከቺ!</p>
                     </div>
-                    <button @click="switchPage('galaxy')" class="px-6 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs tracking-wider uppercase transition shadow-lg shadow-rose-950/50">
-                        Enter Love Galaxy ✨
+                    <button @click="switchPage('galaxy')" class="px-6 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs tracking-wider uppercase transition shadow-lg shadow-rose-950/50 font-amharic">
+                        ወደ ፍቅር ጋላክሲ ግቢ ✨
                     </button>
                 </div>
 
-
+                <!-- Galaxy Page (unchanged) -->
                 <div x-show="currentPage === 'galaxy'" class="absolute inset-0 flex items-center justify-center overflow-hidden bg-radial-[at_center,_var(--tw-gradient-stops)] from-[#120005] via-black to-black">
                     
                     <div class="absolute inset-0 pointer-events-none opacity-40 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+                    
+                    <div id="heartsContainer" class="absolute inset-0 pointer-events-none z-10"></div>
                     
                     <div class="relative w-[560px] h-[560px] flex items-center justify-center animate-galaxy-spin transform scale-85 mobile:scale-100">
                         
@@ -131,20 +128,20 @@
                         <div class="absolute w-72 h-72 rounded-full bg-rose-600/5 blur-3xl rotate-45"></div>
 
                         <div class="absolute z-20 flex items-center justify-center counter-rotate">
-                            <div class="relative w-20 h-20 flex items-center justify-center animate-heart-pulse cursor-pointer" @click="openCosmicOverlay('core')">
+                            <div class="relative w-20 h-20 flex items-center justify-center animate-heart-pulse cursor-pointer" @click="openCosmicOverlay('core'); spawnHearts()">
                                 <svg class="w-16 h-16 text-rose-500 filter drop-shadow-[0_0_15px_rgba(244,63,94,0.8)]" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                                 </svg>
-                                <div class="absolute text-[9px] text-white font-semibold font-serif-lux mt-0.5">Tú & Yo</div>
+                                <div class="absolute text-[8px] text-white font-semibold font-amharic mt-0.5">እኛ</div>
                             </div>
                         </div>
 
                         <template x-for="(tag, index) in galaxyTags" :key="index">
                             <div class="absolute text-[10px] text-rose-200/80 font-medium tracking-widest uppercase whitespace-nowrap cursor-pointer hover:text-white hover:scale-110 transition duration-300"
                                  :style="`transform: rotate(${index * (360 / galaxyTags.length)}deg) translate(${115 + (index % 2 * 35)}px) rotate(-${index * (360 / galaxyTags.length)}deg);`"
-                                 @click="openCosmicOverlay(tag.type)">
+                                 @click="openCosmicOverlay(tag.type); spawnHearts()">
                                 <div class="flex flex-col items-center space-y-1 counter-rotate">
-                                    <span class="bg-black/40 px-2 py-0.5 rounded-full border border-rose-500/10 backdrop-blur-xs" x-text="tag.text"></span>
+                                    <span class="bg-black/40 px-2 py-0.5 rounded-full border border-rose-500/10 backdrop-blur-xs font-amharic" x-text="tag.text"></span>
                                     <span class="text-xs" x-text="tag.icon"></span>
                                 </div>
                             </div>
@@ -152,9 +149,10 @@
                     </div>
 
                     <div class="absolute bottom-4 text-center pointer-events-none z-10">
-                        <p class="text-[10px] text-rose-300/40 uppercase tracking-widest animate-pulse">🌌 Rotate and tap nodes to reveal memories</p>
+                        <p class="text-[10px] text-rose-300/40 uppercase tracking-widest animate-pulse font-amharic">🌌 አሽከርክረሽ ትዝታዎችን ለማየት ነጥቦቹን ንኪ</p>
                     </div>
 
+                    <!-- Galaxy Overlay Popup -->
                     <div x-show="galaxyOverlayActive"
                          x-transition:enter="transition ease-out duration-400"
                          x-transition:enter-start="opacity-0 scale-95"
@@ -162,16 +160,16 @@
                          x-transition:leave="transition ease-in duration-300"
                          x-transition:leave-start="opacity-100 scale-100"
                          x-transition:leave-end="opacity-0 scale-95"
-                         class="absolute inset-x-6 max-w-xs mx-auto bg-neutral-950/95 border border-rose-900/40 p-6 rounded-3xl shadow-2xl backdrop-blur-md z-40 text-center space-y-4">
+                         class="absolute inset-x-6 top-1/2 -translate-y-1/2 max-w-xs mx-auto bg-neutral-950/95 border border-rose-900/40 p-6 rounded-3xl shadow-2xl backdrop-blur-md z-40 text-center space-y-4">
                         
                         <div class="w-12 h-12 rounded-full bg-rose-950/60 border border-rose-500/30 flex items-center justify-center text-xl mx-auto" x-text="activeNodeData.icon"></div>
                         
                         <div class="space-y-1">
-                            <h4 class="font-serif-lux text-lg text-amber-100" x-text="activeNodeData.title"></h4>
-                            <p class="text-[10px] text-rose-400 uppercase tracking-widest" x-text="activeNodeData.subtitle"></p>
+                            <h4 class="font-serif-lux text-lg text-amber-100 font-amharic" x-text="activeNodeData.title"></h4>
+                            <p class="text-[10px] text-rose-400 uppercase tracking-widest font-amharic" x-text="activeNodeData.subtitle"></p>
                         </div>
                         
-                        <p class="text-xs text-neutral-300 leading-relaxed" x-text="activeNodeData.description"></p>
+                        <p class="text-xs text-neutral-300 leading-relaxed font-amharic" x-text="activeNodeData.description"></p>
                         
                         <template x-if="activeNodeData.hasPhoto">
                             <div class="w-full aspect-video rounded-lg overflow-hidden border border-white/10 bg-neutral-900">
@@ -179,13 +177,13 @@
                             </div>
                         </template>
 
-                        <button @click="galaxyOverlayActive = false" class="w-full py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium tracking-wide transition">
-                            Volver al Universo
+                        <button @click="galaxyOverlayActive = false" class="w-full py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium tracking-wide transition font-amharic">
+                            ወደ ዩኒቨርስ ተመለስ
                         </button>
                     </div>
                 </div>
 
-
+                <!-- Message/Letter Page -->
                 <div x-show="currentPage === 'message'" class="absolute inset-0 flex flex-col items-center justify-center p-4 z-10 overflow-hidden">
                     <div class="absolute inset-0 bg-neutral-950/85 transition-all duration-1000 backdrop-blur-xs"></div>
                     
@@ -198,7 +196,7 @@
                         <div class="absolute inset-0 opacity-25 pointer-events-none mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/parchment.png')]"></div>
 
                         <div class="relative z-10 flex-1 flex flex-col justify-start pt-2">
-                            <p class="text-sm md:text-base font-serif-lux italic text-amber-950 leading-relaxed tracking-wide whitespace-pre-wrap select-none" x-text="typedText"></p>
+                            <p class="text-sm md:text-base font-serif-lux italic text-amber-950 leading-relaxed tracking-wide whitespace-pre-wrap select-none font-amharic" x-text="typedText"></p>
                         </div>
 
                         <div x-show="photoVisible"
@@ -207,15 +205,16 @@
                              x-transition:enter-end="opacity-100 scale-100 translate-x-0 translate-y-0 rotate-[-4deg]"
                              class="absolute bottom-4 right-4 w-28 bg-white p-1.5 shadow-lg border border-neutral-200/60 transform rotate-[-4deg] z-20">
                             <div class="w-full aspect-square bg-neutral-100 overflow-hidden mb-2">
-                                <img src="message-photo.jpg" alt="Us Memory" class="w-full h-full object-cover grayscale-[15%] contrast-[105%]" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=300'">
+                                <img src="message-photo.jpg" alt="እኛ" class="w-full h-full object-cover grayscale-[15%] contrast-[105%]" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=300'">
                             </div>
                             <div class="text-center">
-                                <span class="font-script text-lg text-neutral-800 leading-none">Together x</span>
+                                <span class="font-script text-lg text-neutral-800 leading-none font-amharic">አብረን x</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Cake/Music Page -->
                 <div x-show="currentPage === 'cake'" x-transition class="space-y-6 text-center max-w-xs mx-auto">
                     <div class="relative w-44 h-44 mx-auto flex items-center justify-center">
                         <div class="absolute inset-0 rounded-full bg-neutral-900 border-4 border-neutral-800 shadow-2xl flex items-center justify-center"
@@ -235,54 +234,143 @@
                     </div>
 
                     <div class="space-y-1">
-                        <h4 class="font-serif-lux text-lg text-amber-100">Our Special Track</h4>
-                        <p class="text-[11px] text-neutral-400 tracking-widest uppercase">Now Playing Your Birthday Melody</p>
+                        <h4 class="font-serif-lux text-lg text-amber-100 font-amharic">የኛ ልዩ ዘፈን</h4>
+                        <p class="text-[11px] text-neutral-400 tracking-widest uppercase font-amharic">አሁን የልደት ዜማሽን እያጫወትኩ ነው</p>
                     </div>
 
                     <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex items-center justify-between text-left">
                         <div class="flex items-center space-x-3">
                             <span class="text-2xl">🎂</span>
                             <div>
-                                <h5 class="text-xs font-semibold text-neutral-200">Make A Silent Wish</h5>
-                                <p class="text-[10px] text-neutral-400">Blow your candles whenever ready</p>
+                                <h5 class="text-xs font-semibold text-neutral-200 font-amharic">ምኞትሽን ለብቻሽ ጠይቂ</h5>
+                                <p class="text-[10px] text-neutral-400 font-amharic">ሻማውን ለማጥፋት ዝግጁ ስትሆኚ</p>
                             </div>
                         </div>
-                        <button @click="alert('✨ May your infinite universe remain bright and beautiful forever! ❤️')" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-medium transition shadow-md">
-                            Blow Out
+                        <button @click="blowCandles()" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-medium transition shadow-md font-amharic">
+                            አጥፊ
                         </button>
+                    </div>
+                </div>
+
+                <!-- GALLERY PAGE (NEW) -->
+                <div x-show="currentPage === 'gallery'" class="absolute inset-0 flex flex-col pt-4 pb-20 overflow-y-auto">
+                    <div class="px-4 space-y-8">
+                        
+                        <!-- Section: Her Solo -->
+                        <div>
+                            <h3 class="text-lg font-amharic text-rose-300 mb-3 flex items-center">
+                                <span class="mr-2">🌸</span> እሷ ብቻ
+                            </h3>
+                            <div class="relative">
+                                <div class="flex overflow-x-auto hide-scrollbar space-x-3 pb-2" 
+                                     x-ref="soloCarousel"
+                                     @scroll.debounce="updateArrows('solo')">
+                                    <template x-for="(img, idx) in galleryData.solo" :key="idx">
+                                        <div class="flex-none w-40 h-52 rounded-xl overflow-hidden border border-white/10 bg-neutral-900">
+                                            <img :src="img" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
+                                        </div>
+                                    </template>
+                                </div>
+                                <button @click="scrollCarousel('solo', -200)" class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">‹</button>
+                                <button @click="scrollCarousel('solo', 200)" class="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">›</button>
+                            </div>
+                        </div>
+
+                        <!-- Section: Us Together -->
+                        <div>
+                            <h3 class="text-lg font-amharic text-rose-300 mb-3 flex items-center">
+                                <span class="mr-2">💑</span> አብረን
+                            </h3>
+                            <div class="relative">
+                                <div class="flex overflow-x-auto hide-scrollbar space-x-3 pb-2" x-ref="togetherCarousel">
+                                    <template x-for="(img, idx) in galleryData.together" :key="idx">
+                                        <div class="flex-none w-40 h-52 rounded-xl overflow-hidden border border-white/10 bg-neutral-900">
+                                            <img :src="img" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
+                                        </div>
+                                    </template>
+                                </div>
+                                <button @click="scrollCarousel('together', -200)" class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">‹</button>
+                                <button @click="scrollCarousel('together', 200)" class="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">›</button>
+                            </div>
+                        </div>
+
+                        <!-- Section: Graduation -->
+                        <div>
+                            <h3 class="text-lg font-amharic text-rose-300 mb-3 flex items-center">
+                                <span class="mr-2">🎓</span> ምረቃ
+                            </h3>
+                            <div class="relative">
+                                <div class="flex overflow-x-auto hide-scrollbar space-x-3 pb-2" x-ref="gradCarousel">
+                                    <template x-for="(img, idx) in galleryData.graduation" :key="idx">
+                                        <div class="flex-none w-40 h-52 rounded-xl overflow-hidden border border-white/10 bg-neutral-900">
+                                            <img :src="img" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
+                                        </div>
+                                    </template>
+                                </div>
+                                <button @click="scrollCarousel('grad', -200)" class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">‹</button>
+                                <button @click="scrollCarousel('grad', 200)" class="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">›</button>
+                            </div>
+                        </div>
+
+                        <!-- Section: Birthday -->
+                        <div>
+                            <h3 class="text-lg font-amharic text-rose-300 mb-3 flex items-center">
+                                <span class="mr-2">🎂</span> ልደት
+                            </h3>
+                            <div class="relative">
+                                <div class="flex overflow-x-auto hide-scrollbar space-x-3 pb-2" x-ref="bdayCarousel">
+                                    <template x-for="(img, idx) in galleryData.birthday" :key="idx">
+                                        <div class="flex-none w-40 h-52 rounded-xl overflow-hidden border border-white/10 bg-neutral-900">
+                                            <img :src="img" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">
+                                        </div>
+                                    </template>
+                                </div>
+                                <button @click="scrollCarousel('bday', -200)" class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">‹</button>
+                                <button @click="scrollCarousel('bday', 200)" class="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 rounded-full p-1 carousel-btn">›</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </main>
 
+            <!-- Footer Navigation (updated with Gallery) -->
             <footer class="p-4 bg-gradient-to-t from-black via-neutral-950 to-transparent border-t border-white/5 z-20">
                 <nav class="flex items-center justify-around max-w-sm mx-auto">
                     <button @click="switchPage('hub')" 
                             class="flex flex-col items-center space-y-1 p-2 transition group"
                             :class="currentPage === 'hub' ? 'text-rose-400' : 'text-neutral-400 hover:text-neutral-200'">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
-                        <span class="text-[9px] tracking-wider uppercase font-medium">Hub</span>
+                        <span class="text-[9px] tracking-wider uppercase font-medium font-amharic">መነሻ</span>
                     </button>
 
                     <button @click="switchPage('galaxy')" 
                             class="flex flex-col items-center space-y-1 p-2 transition group"
                             :class="currentPage === 'galaxy' ? 'text-rose-400' : 'text-neutral-400 hover:text-neutral-200'">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                        <span class="text-[9px] tracking-wider uppercase font-medium">Cosmos</span>
+                        <span class="text-[9px] tracking-wider uppercase font-medium font-amharic">ኮስሞስ</span>
                     </button>
 
                     <button @click="switchPage('message')" 
                             class="flex flex-col items-center space-y-1 p-2 transition group"
                             :class="currentPage === 'message' ? 'text-rose-400' : 'text-neutral-400 hover:text-neutral-200'">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h10.5m-10.5 3h10.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
-                        <span class="text-[9px] tracking-wider uppercase font-medium">Letter</span>
+                        <span class="text-[9px] tracking-wider uppercase font-medium font-amharic">ደብዳቤ</span>
                     </button>
 
                     <button @click="switchPage('cake')" 
                             class="flex flex-col items-center space-y-1 p-2 transition group"
                             :class="currentPage === 'cake' ? 'text-rose-400' : 'text-neutral-400 hover:text-neutral-200'">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 0v13.5m0-13.5L9 12m0 0v7.5M12 9h.008v.008H12V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.008v.008H12v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
-                        <span class="text-[9px] tracking-wider uppercase font-medium">Melody</span>
+                        <span class="text-[9px] tracking-wider uppercase font-medium font-amharic">ዜማ</span>
+                    </button>
+
+                    <!-- NEW GALLERY TAB -->
+                    <button @click="switchPage('gallery')" 
+                            class="flex flex-col items-center space-y-1 p-2 transition group"
+                            :class="currentPage === 'gallery' ? 'text-rose-400' : 'text-neutral-400 hover:text-neutral-200'">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        <span class="text-[9px] tracking-wider uppercase font-medium font-amharic">አልበም</span>
                     </button>
                 </nav>
             </footer>
@@ -295,53 +383,113 @@
                 currentPage: 'envelope', 
                 audioPlaying: false,
 
-                // Galaxy State Engine
                 galaxyOverlayActive: false,
                 activeNodeData: {},
                 galaxyTags: [
-                    { text: 'Happy Birthday', icon: '🎂', type: 'bday' },
-                    { text: 'Mi Amor Eterno', icon: '🌌', type: 'forever' },
-                    { text: 'Eres Magia', icon: '✨', type: 'magic' },
-                    { text: 'Te Adoro', icon: '💖', type: 'love' },
-                    { text: 'Para Siempre', icon: '🔒', type: 'always' },
-                    { text: 'Cumple Feliz', icon: '🎉', type: 'celebrate' }
+                    { text: 'መልካም ልደት', icon: '🎂', type: 'bday' },
+                    { text: 'ዘላለማዊ ፍቅሬ', icon: '🌌', type: 'forever' },
+                    { text: 'አንቺ ድምቀት ነሽ', icon: '✨', type: 'magic' },
+                    { text: 'በጣም እወድሻለሁ', icon: '💖', type: 'love' },
+                    { text: 'ለዘለዓለም', icon: '🔒', type: 'always' },
+                    { text: 'ደስ ይበልሽ', icon: '🎉', type: 'celebrate' }
                 ],
-                // Nodes configuration data dictionary mapping
+                
                 nodeRegistry: {
-                    core: { title: "Nuestro Universo", subtitle: "Tú y Yo unidos", description: "El centro de gravedad de toda mi felicidad eres tú. No importa cuántas galaxias existan, mi mundo gira a tu alrededor.", icon: "❤️", hasPhoto: true, type: "core" },
-                    bday: { title: "Happy Birthday", subtitle: "Tu Día Especial", description: "Hoy celebramos el día en que nació la persona más maravillosa de este planeta. ¡Te mereces todo lo mejor hoy y siempre!", icon: "🎂", hasPhoto: false },
-                    forever: { title: "Mi Amor Eterno", subtitle: "Sin Límites", description: "Nuestro amor es como el espacio infinito: no tiene principio, no tiene final, y sigue expandiéndose cada segundo.", icon: "🌌", hasPhoto: true, type: "forever" },
-                    magic: { title: "Eres Magia pura", subtitle: "Destellos de luz", description: "Haces que lo ordinario se vuelva extraordinario con el simple hecho de sonreír o mirarme.", icon: "✨", hasPhoto: false },
-                    love: { title: "Te Adoro con Locura", subtitle: "Mi mundo entero", description: "Cada rincón de este espacio virtual fue diseñado pensando en la inmensidad de lo que siento por ti.", icon: "💖", hasPhoto: false },
-                    always: { title: "Para Siempre", subtitle: "Un pacto cósmico", description: "No importa en qué línea temporal o universo nos encontremos, mi corazón siempre te elegirá una y otra vez.", icon: "🔒", hasPhoto: true, type: "always" },
-                    celebrate: { title: "Hoy Celebramos Juntos", subtitle: "Un año más bello", description: "Brindemos por los recuerdos del pasado y las hermosas aventuras que aún nos esperan en este viaje.", icon: "🎉", hasPhoto: false }
+                    core: { title: "የኛ ዩኒቨርስ", subtitle: "አንድ ሆነን", description: "የደስታዬ ማዕከል አንቺ ነሽ። ምንም ያህል ጋላክሲዎች ቢኖሩም አለሜ የሚዞረው በአንቺ ዙሪያ ነው።", icon: "❤️", hasPhoto: true, type: "core" },
+                    bday: { title: "መልካም ልደት", subtitle: "ልዩ ቀንሽ", description: "ዛሬ በዚህ ፕላኔት ላይ እጅግ አስደናቂዋ ሴት የተወለደችበትን ቀን እናከብራለን። ዛሬም ሆነ ዘወትር መልካሙ ሁሉ ይገባሽናል!", icon: "🎂", hasPhoto: false },
+                    forever: { title: "ዘላለማዊ ፍቅሬ", subtitle: "ወሰን የለሽ", description: "ፍቅራችን እንደ ማለቂያ የሌለው ጠፈር ነው፤ መጀመሪያም መጨረሻም የለውም፤ በየሰከንዱ እየተስፋፋ ይሄዳል።", icon: "🌌", hasPhoto: true, type: "forever" },
+                    magic: { title: "አንቺ ንጹህ ድምቀት", subtitle: "የብርሃን ጮራዎች", description: "በፈገግታሽ ወይም በእይታሽ ብቻ ተራውን ነገር ወደ ያልተለመደ ድምቀት ትቀይሪያለሽ።", icon: "✨", hasPhoto: false },
+                    love: { title: "በጣም እወድሻለሁ", subtitle: "መላው አለሜ", description: "የዚህ ቨርቹዋል ጠፈር እያንዳንዱ ማዕዘን ለአንቺ ያለኝን ግዙፍ ስሜት አስቤ ነው የተሰራው።", icon: "💖", hasPhoto: false },
+                    always: { title: "ለዘለዓለም", subtitle: "የኮስሚክ ቃል ኪዳን", description: "በየትኛውም የጊዜ መስመር ወይም ዩኒቨርስ ውስጥ ብንገኝ ልቤ ሁሌም አንቺን ደጋግሞ ይመርጻል።", icon: "🔒", hasPhoto: true, type: "always" },
+                    celebrate: { title: "ዛሬ አብረን እናከብራለን", subtitle: "አንድ ተጨማሪ ውብ አመት", description: "ላለፉት ትዝታዎች እና በዚህ ጉዞ ውስጥ ለሚጠብቁን ውብ ጀብዱዎች እንጠጣ!", icon: "🎉", hasPhoto: false }
                 },
 
-                // Letter Reveal States
+                // Gallery Data (using original filenames)
+                galleryData: {
+                    solo: [
+                        "fashioned.jpg", "fashion 2.jpg", "fashion 3.jpg", "fasion 4.jpg", "fationed 10.jpg",
+                        "her casual.jpg", "her 50 day.jpg", "her 50 day 2.jpg", "her 50 day 3.jpg",
+                        "crismination.jpg", "crismination 2.jpg"
+                    ],
+                    together: [
+                        "us together.jpg", "us together 2.jpg", "us together 3.jpg", "us together 5.jpg",
+                        "us together 11.jpg", "us together 12.jpg", "us together 13.jpg", "us together 14.jpg",
+                        "us together 15.jpg", "us together 16.jpg", "us together 17.jpg", "us together 18.jpg",
+                        "us together 19.jpg", "us together 20.jpg", "us together 21.jpg"
+                    ],
+                    graduation: [
+                        "graduation 1.jpg",
+                        "us graduation.jpg", "us graduation 2.JPG", "us graduation 3.JPG", "us graduation 4.JPG",
+                        "us graduation 5.JPG", "us graduation 6.JPG", "us graduation 7.JPG", "us graduation 8.JPG",
+                        "us graduation 9.JPG", "us graduation 10.jpg", "us graduation 11.jpg", "us graduation 13.jpg"
+                    ],
+                    birthday: [
+                        "last yr her bd.jpg", "last yr her birthday 2.jpg", "last yr her birthday 4.jpg",
+                        "last yr her birthday 5.jpg", "last yr her birthday 6.jpg"
+                    ]
+                },
+
                 letterVisible: false,
                 photoVisible: false,
                 typedText: '',
-                fullMessage: "Dear Love,\n\nWishing you the happiest of birthdays. May this year bring you endless joy, love, and every dream fulfilled.\n\nForever yours,\n[Name]",
+                fullMessage: "ውዷ ፍቅሬ፣\n\nእጅግ ደስ የሚል ልደት እመኛልሁ። ይህ አመት ማለቂያ የሌለው ደስታን፣ ፍቅርን እና እያንዳንዱ ህልም እውን ሆኖ እንዲያይ ተመኘሁ።\n\nለዘለዓለም የአንቺ፣\n[ስምህ]",
                 typingSpeed: 45,
                 typingTimer: null,
 
-                openCard() {
-                    this.currentPage = 'hub';
-                    this.playAudio();
-                },
+                openCard() { this.currentPage = 'hub'; this.playAudio(); },
+                
                 getHubTitle() {
-                    switch(this.currentPage) {
-                        case 'hub': return 'Birthday Central';
-                        case 'galaxy': return 'Love Galaxy Vortex';
-                        case 'message': return 'A Secret Note';
-                        case 'cake': return 'Sweet Symphony';
-                        default: return 'For You';
-                    }
+                    const titles = {
+                        hub: 'የልደት ማዕከል', galaxy: 'የፍቅር ጋላክሲ አዙሪት',
+                        message: 'ሚስጥራዊ ማስታወሻ', cake: 'ጣፋጭ ሲምፎኒ', gallery: 'የፎቶ አልበም'
+                    };
+                    return titles[this.currentPage] || 'ለአንቺ';
                 },
+                getSubtitle() {
+                    const subs = {
+                        hub: 'ልዩ የልደት ማዕከል', galaxy: 'ነጥቦቹን በመንካት ተመልከት',
+                        message: 'የፍቅር ደብዳቤ', cake: 'ልዩ የልደት ዜማ', gallery: 'የማይረሱ ትዝታዎች'
+                    };
+                    return subs[this.currentPage] || '';
+                },
+                
                 openCosmicOverlay(nodeKey) {
                     this.activeNodeData = this.nodeRegistry[nodeKey] || this.nodeRegistry['core'];
                     this.galaxyOverlayActive = true;
                 },
+                
+                spawnHearts() {
+                    const container = document.getElementById('heartsContainer');
+                    if (!container) return;
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            const heart = document.createElement('div');
+                            heart.className = 'absolute text-rose-400 pointer-events-none animate-float-up';
+                            heart.style.left = Math.random() * 80 + 10 + '%';
+                            heart.style.top = Math.random() * 60 + 40 + '%';
+                            heart.style.fontSize = (Math.random() * 16 + 12) + 'px';
+                            heart.innerHTML = ['❤️', '💕', '💖', '✨', '💫'][Math.floor(Math.random() * 5)];
+                            container.appendChild(heart);
+                            setTimeout(() => heart.remove(), 2000);
+                        }, i * 80);
+                    }
+                },
+                
+                blowCandles() {
+                    this.spawnHearts();
+                    alert('✨ ማለቂያ የሌለው ዩኒቨርስሽ ለዘለዓለም ብሩህ እና ውብ ሆኖ ይቀጥል! ❤️');
+                },
+                
+                // Carousel scroll helper
+                scrollCarousel(section, offset) {
+                    let ref;
+                    if (section === 'solo') ref = this.$refs.soloCarousel;
+                    else if (section === 'together') ref = this.$refs.togetherCarousel;
+                    else if (section === 'grad') ref = this.$refs.gradCarousel;
+                    else if (section === 'bday') ref = this.$refs.bdayCarousel;
+                    if (ref) ref.scrollBy({ left: offset, behavior: 'smooth' });
+                },
+
                 switchPage(pageName) {
                     this.currentPage = pageName;
                     this.galaxyOverlayActive = false;
@@ -355,7 +503,6 @@
                         this.letterVisible = false;
                         this.photoVisible = false;
                         this.typedText = '';
-                        
                         setTimeout(() => {
                             this.letterVisible = true;
                             this.startTypewriter();
@@ -366,39 +513,38 @@
                         this.typedText = '';
                     }
                 },
+                
                 startTypewriter() {
                     let index = 0;
                     const type = () => {
-                        if (index < this.fullMessage.length) {
+                        if (index < this.fullMessage.length && this.currentPage === 'message') {
                             this.typedText += this.fullMessage.charAt(index);
                             index++;
                             this.typingTimer = setTimeout(type, this.typingSpeed);
-                        } else {
+                        } else if (this.currentPage === 'message') {
                             this.showPhotoWithDelay();
                         }
                     };
                     setTimeout(type, 600);
                 },
+                
                 showPhotoWithDelay() {
                     setTimeout(() => {
-                        if (this.currentPage === 'message') {
-                            this.photoVisible = true;
-                        }
+                        if (this.currentPage === 'message') this.photoVisible = true;
                     }, 300);
                 },
+                
                 playAudio() {
-                    this.$refs.bgMusic.play().then(() => {
-                        this.audioPlaying = true;
-                    }).catch(err => console.log("Audio contextual trigger awaiting user input action."));
-                },
-                toggleAudio() {
-                    if (this.audioPlaying) {
-                        this.$refs.bgMusic.pause();
-                        this.audioPlaying = false;
-                    } else {
-                        this.$refs.bgMusic.play();
-                        this.audioPlaying = true;
+                    if (this.$refs.bgMusic) {
+                        this.$refs.bgMusic.play().then(() => this.audioPlaying = true)
+                        .catch(() => console.log("ንካ ያስፈልጋል"));
                     }
+                },
+                
+                toggleAudio() {
+                    if (!this.$refs.bgMusic) return;
+                    if (this.audioPlaying) { this.$refs.bgMusic.pause(); this.audioPlaying = false; }
+                    else { this.$refs.bgMusic.play().then(() => this.audioPlaying = true).catch(() => {}); }
                 }
             }
         }
