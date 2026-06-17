@@ -28,7 +28,6 @@
         .animate-spin-slow { animation: spin-slow 12s linear infinite; }
         .animate-float-up { animation: float-up 2s ease-out forwards; }
         
-        /* Carousel hide scrollbar */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -72,7 +71,7 @@
             <p class="text-[11px] text-neutral-500 tracking-widest uppercase mb-6 animate-pulse font-amharic">ልቡን በመጫን ወደ አለምህ ግባ</p>
         </div>
 
-        <!-- Main Content Area (no gallery page) -->
+        <!-- Main Content Area -->
         <div x-show="currentPage !== 'envelope'" 
              x-transition:enter="transition ease-out duration-700 delay-300"
              class="absolute inset-0 flex flex-col justify-between overflow-hidden">
@@ -97,7 +96,7 @@
                 <!-- Hub Page -->
                 <div x-show="currentPage === 'hub'" x-transition class="w-full text-center px-6 space-y-6">
                     <div class="relative w-32 h-32 mx-auto rounded-full p-1 bg-gradient-to-tr from-rose-500 via-purple-600 to-amber-500 shadow-xl">
-                        <img src="hub-avatar.jpg" alt="እኛ" class="w-full h-full object-cover rounded-full border-2 border-black" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400'">
+                        <img :src="getPhotoUrl('hub-avatar.jpg')" alt="እኛ" class="w-full h-full object-cover rounded-full border-2 border-black" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400'">
                     </div>
                     <div class="space-y-2">
                         <h3 class="text-2xl font-serif-lux text-neutral-100 font-amharic">መልካም ልደት ፍቅሬ!</h3>
@@ -163,16 +162,14 @@
                         
                         <p class="text-xs text-neutral-300 leading-relaxed font-amharic" x-text="activeNodeData.description"></p>
                         
-                        <!-- Image Carousel -->
                         <div class="relative">
                             <div class="flex overflow-x-auto hide-scrollbar space-x-2 rounded-lg" x-ref="carouselScroll">
                                 <template x-for="(img, idx) in activeNodeData.images" :key="idx">
                                     <div class="flex-none w-full max-w-[200px] aspect-[4/5] rounded-lg overflow-hidden border border-white/10 bg-neutral-900">
-                                        <img :src="img" class="w-full h-full object-cover" loading="lazy" onerror="this.parentElement.style.display='none'">
+                                        <img :src="getPhotoUrl(img)" class="w-full h-full object-cover" loading="lazy" onerror="this.parentElement.style.display='none'">
                                     </div>
                                 </template>
                             </div>
-                            <!-- Arrows (visible if more than one image) -->
                             <button x-show="activeNodeData.images.length > 1" 
                                     @click="scrollCarousel(-200)" 
                                     class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black/90 rounded-full p-1 text-white">‹</button>
@@ -209,7 +206,7 @@
                              x-transition:enter-end="opacity-100 scale-100 translate-x-0 translate-y-0 rotate-[-4deg]"
                              class="absolute bottom-4 right-4 w-28 bg-white p-1.5 shadow-lg border border-neutral-200/60 transform rotate-[-4deg] z-20">
                             <div class="w-full aspect-square bg-neutral-100 overflow-hidden mb-2">
-                                <img src="message-photo.jpg" alt="እኛ" class="w-full h-full object-cover grayscale-[15%] contrast-[105%]" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=300'">
+                                <img :src="getPhotoUrl('message-photo.jpg')" alt="እኛ" class="w-full h-full object-cover grayscale-[15%] contrast-[105%]" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=300'">
                             </div>
                             <div class="text-center">
                                 <span class="font-script text-lg text-neutral-800 leading-none font-amharic">አብረን x</span>
@@ -258,7 +255,6 @@
 
             </main>
 
-            <!-- Footer Navigation (4 tabs, no gallery) -->
             <footer class="p-4 bg-gradient-to-t from-black via-neutral-950 to-transparent border-t border-white/5 z-20">
                 <nav class="flex items-center justify-around max-w-sm mx-auto">
                     <button @click="switchPage('hub')" 
@@ -295,10 +291,74 @@
 
     <script>
         function birthdayApp() {
+            // ========== ALL YOUR GOOGLE DRIVE FILE IDS ==========
+            const photoMap = {
+                // Main profile photos (using us together 15 & 21 - change if you prefer others)
+                "hub-avatar.jpg": "1CRHmBIqNTCwk-xYtBTEB2gDd2Il70waf",
+                "message-photo.jpg": "1CeYMNnGtcMPtO9lM2seyTFAhY9mXWkYm",
+                // Us together
+                "us together.jpg": "1NPjGfv-fOjJmLsLRMJsnHQc2U5DSMRxn",
+                "us together 2.jpg": "1_vndZ0eNGfmr8DZ52fXyjeTp6obEo59C",
+                "us together 3.jpg": "1OBQ0byXeMvZCwU01GEOOFIzYy8gTqOhY",
+                "us together 5.jpg": "1QvAEYM-WbyP5lVRGbYHnu6absddrTSnF",
+                "us together 11.jpg": "13K4JOCJxYbkUikylVlnewGwbrekp_2JP",
+                "us together 12.jpg": "1xI7XyVcZK55Ui9zBNNa-aD_WPaGPqU--",
+                "us together 13.jpg": "11soxsuC6SJaAHcfiZjS5SBWenwIAeUrO",
+                "us together 14.jpg": "1CnCyfpoIQrZYlzlIgjHOyox5tmibMmVD",
+                "us together 15.jpg": "1CRHmBIqNTCwk-xYtBTEB2gDd2Il70waf",
+                "us together 16.jpg": "1xO4VPtL_xiUzeOqvPnPqd8wJ0e2iQy3-",
+                "us together 17.jpg": "14oHGVDh40iNj1I-Eanp94Iw34V_C7Q4s",
+                "us together 18.jpg": "13y7JHt2QU4_c66BCjL-Kiehg3uFWS63k",
+                "us together 19.jpg": "1WaEjuWbyQ_6tlusPUaULqHHMHedt6SeD",
+                "us together 20.jpg": "15x-I70V4Tucl2Psvy-tL-G1aUOz9gSJn",
+                "us together 21.jpg": "1CeYMNnGtcMPtO9lM2seyTFAhY9mXWkYm",
+                // Birthday
+                "last yr her bd.jpg": "1t5HVZHxuRxloOXh0ZNSjHqCq6HlhaJqV",
+                "last yr her birthday.jpg": "1ILDI9HejEsuL1NrCJA9_21nqBaKjrB2L",
+                "last yr her birthday 2.jpg": "1MxCd0PPDQmYZW0-4-X5oN4fcBazPk8ZS",
+                "last yr her birthday 4.jpg": "1w-GzzLQuaF64FfWOEGKjkVqGK-wglBWB",
+                "last yr her birthday 5.jpg": "1LcpVH49oU-jpACGTUR6F_n-ymg17dUTK",
+                "last yr her birthday 6.jpg": "1YsCwJcxFeFxPmpbTnF3A4OqSrWnTGOgR",
+                // Graduation
+                "graduation 1.jpg": "1uFZ-9te4Tzk5QfXH5PxfMliCtXbJs0dR",
+                "us graduation.JPG": "1DeerfNq9hECJrkX57a1IvDGDmWm90OJ1",
+                "us graduation 2.JPG": "1c5PsDl8nusHmpB8-f6_6cGI-oLd7ktB-",
+                "us graduation 3.JPG": "1IGMBVMZ-dwD3G0f2K06DzWHZsrrVY5Sx",
+                "us graduation 4.JPG": "1IAye8XCD6jWuzUmU0TdYayv3PMYwKgdr",
+                "us graduation 5.JPG": "1U-uuuFenJoLBvtDh6EghcjIOHLSou7OV",
+                "us graduation 6.JPG": "1Zs3lSAiCeWDCaGPZ8cyCH_yNo2OF43q8",
+                "us graduation 7.JPG": "1NC8xg7rKXjxFCL27euEMCA6QskyrSIQL",
+                "us graduation 8.JPG": "198QMR6G_hd0GUNHZzCxGEcaIGSM8j8hY",
+                "us graduation 9.JPG": "12TbOnFyXDNS0H0dOX8rQA2ZYQpu5PbIB",
+                "us graduation 10.jpg": "1cR7pbWQovZ0yd_IPd-O2SkRo8WGAUVKJ",
+                "us graduation 11.jpg": "1RU_6jhHxQKpYq1YABNy__XE_RpePtDal",
+                "us graduation 13.jpg": "14P_ymggsL-BA1TD1Ciu7vK0x6Se4Ry0A",
+                // Her solo / fashion
+                "fashioned.jpg": "16lKmc1BMj1uNIOcN-3wdErWUYpHKtjMg",
+                "fashion 2.jpg": "1JoZ2K83L1K69YTzEU333qbZShSCtHYn5",
+                "fashion 3.jpg": "1I_k1NHOnXNyjemjjWc3GTQ7X1HhTy_O1",
+                "fasion 4.jpg": "1iXKDxOOgD2oO4_r5rdcoACKlhtE14pKU",
+                "fationed 10.jpg": "1hLRuo_30nnw8oOx2TK-gzFg4OWACOQ40",
+                "her casual.jpg": "1B1Cmv1iv8jeFHv1mhQF7_yCf28PfqPUN",
+                "her 50 day.jpg": "1yklKi4uoUUVmbfxfhh8w55f8IQOwN-yi",
+                "her 50 day 2.jpg": "1nuwsBHuHn5MYE0B8v5I4eaX1QEpFIURo",
+                "her 50 day 3.jpg": "1_PZCoxMhCxkd9_wog3_h_TofWm9AsWhr",
+                "crismination.jpg": "14RxfPEuExjDsKWhaSvOYA71t5ANcsA4D",
+                "crismination 2.jpg": "1coDyDDBXc1h025fTkjatkoHTd_OZf9AR"
+            };
+
+            function getPhotoUrl(filename) {
+                const id = photoMap[filename];
+                if (!id) {
+                    console.warn("Missing ID for:", filename);
+                    return '';
+                }
+                return `https://drive.google.com/uc?export=view&id=${id}`;
+            }
+
             return {
                 currentPage: 'envelope', 
                 audioPlaying: false,
-
                 galaxyOverlayActive: false,
                 activeNodeData: { images: [] },
                 galaxyTags: [
@@ -309,8 +369,6 @@
                     { text: 'ለዘለዓለም', icon: '🔒', type: 'always' },
                     { text: 'ደስ ይበልሽ', icon: '🎉', type: 'celebrate' }
                 ],
-                
-                // Node registry with images arrays using your original filenames
                 nodeRegistry: {
                     core: {
                         title: "የኛ ዩኒቨርስ", subtitle: "አንድ ሆነን",
@@ -328,8 +386,8 @@
                         description: "ዛሬ በዚህ ፕላኔት ላይ እጅግ አስደናቂዋ ሴት የተወለደችበትን ቀን እናከብራለን።",
                         icon: "🎂",
                         images: [
-                            "last yr her bd.jpg", "last yr her birthday 2.jpg", "last yr her birthday 4.jpg",
-                            "last yr her birthday 5.jpg", "last yr her birthday 6.jpg"
+                            "last yr her bd.jpg", "last yr her birthday.jpg", "last yr her birthday 2.jpg",
+                            "last yr her birthday 4.jpg", "last yr her birthday 5.jpg", "last yr her birthday 6.jpg"
                         ]
                     },
                     forever: {
@@ -337,7 +395,7 @@
                         description: "ፍቅራችን እንደ ማለቂያ የሌለው ጠፈር ነው፤ በየሰከንዱ እየተስፋፋ ይሄዳል።",
                         icon: "🌌",
                         images: [
-                            "graduation 1.jpg", "us graduation.jpg", "us graduation 2.JPG", "us graduation 3.JPG",
+                            "graduation 1.jpg", "us graduation.JPG", "us graduation 2.JPG", "us graduation 3.JPG",
                             "us graduation 4.JPG", "us graduation 5.JPG", "us graduation 6.JPG", "us graduation 7.JPG",
                             "us graduation 8.JPG", "us graduation 9.JPG", "us graduation 10.jpg", "us graduation 11.jpg",
                             "us graduation 13.jpg"
@@ -381,7 +439,6 @@
                         ]
                     }
                 },
-
                 letterVisible: false,
                 photoVisible: false,
                 typedText: '',
@@ -389,8 +446,9 @@
                 typingSpeed: 45,
                 typingTimer: null,
 
+                getPhotoUrl,
+
                 openCard() { this.currentPage = 'hub'; this.playAudio(); },
-                
                 getHubTitle() {
                     const titles = { hub: 'የልደት ማዕከል', galaxy: 'የፍቅር ጋላክሲ', message: 'ሚስጥራዊ ማስታወሻ', cake: 'ጣፋጭ ሲምፎኒ' };
                     return titles[this.currentPage] || 'ለአንቺ';
@@ -399,20 +457,16 @@
                     const subs = { hub: 'ልዩ የልደት ማዕከል', galaxy: 'ከዋክብትን በመንካት ተመልከች', message: 'የፍቅር ደብዳቤ', cake: 'ልዩ የልደት ዜማ' };
                     return subs[this.currentPage] || '';
                 },
-                
                 openGalaxyNode(nodeKey) {
                     this.activeNodeData = this.nodeRegistry[nodeKey] || this.nodeRegistry['core'];
                     this.galaxyOverlayActive = true;
-                    // Reset carousel scroll position
                     this.$nextTick(() => {
                         if (this.$refs.carouselScroll) this.$refs.carouselScroll.scrollLeft = 0;
                     });
                 },
-                
                 scrollCarousel(offset) {
                     if (this.$refs.carouselScroll) this.$refs.carouselScroll.scrollBy({ left: offset, behavior: 'smooth' });
                 },
-                
                 spawnHearts() {
                     const container = document.getElementById('heartsContainer');
                     if (!container) return;
@@ -429,21 +483,17 @@
                         }, i * 80);
                     }
                 },
-                
                 blowCandles() {
                     this.spawnHearts();
                     alert('✨ ማለቂያ የሌለው ዩኒቨርስሽ ለዘለዓለም ብሩህ እና ውብ ሆኖ ይቀጥል! ❤️');
                 },
-
                 switchPage(pageName) {
                     this.currentPage = pageName;
                     this.galaxyOverlayActive = false;
-                    
                     if (this.typingTimer) {
                         clearTimeout(this.typingTimer);
                         this.typingTimer = null;
                     }
-
                     if (pageName === 'message') {
                         this.letterVisible = false;
                         this.photoVisible = false;
@@ -458,7 +508,6 @@
                         this.typedText = '';
                     }
                 },
-                
                 startTypewriter() {
                     let index = 0;
                     const type = () => {
@@ -472,20 +521,17 @@
                     };
                     setTimeout(type, 600);
                 },
-                
                 showPhotoWithDelay() {
                     setTimeout(() => {
                         if (this.currentPage === 'message') this.photoVisible = true;
                     }, 300);
                 },
-                
                 playAudio() {
                     if (this.$refs.bgMusic) {
                         this.$refs.bgMusic.play().then(() => this.audioPlaying = true)
                         .catch(() => console.log("ንካ ያስፈልጋል"));
                     }
                 },
-                
                 toggleAudio() {
                     if (!this.$refs.bgMusic) return;
                     if (this.audioPlaying) { this.$refs.bgMusic.pause(); this.audioPlaying = false; }
